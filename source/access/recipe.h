@@ -22,8 +22,8 @@ struct Recipe
  */
 struct Recipe* getAllRecipes(MYSQL* connection);
 
-void freeRecipesList(struct Recipe* i);
+void freeRecipesList(struct Recipe* r);
 
-void displayRecipesList(struct Recipe* i);
+void displayRecipesList(struct Recipe* r);
 
 #endif //PISCINE_RECIPE_H

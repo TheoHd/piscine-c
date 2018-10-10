@@ -34,34 +34,34 @@ void freeRecipe(struct Recipe* toDestroy)
 }
 
 
-void freeRecipeList(struct Recipe* i)
+void freeRecipesList(struct Recipe* r)
 {
     struct Recipe* tmp;
-    while (i) {
-        tmp = i;
-        i = i->next;
+    while (r) {
+        tmp = r;
+        r = r->next;
         freeRecipe(tmp);
     }
 }
 
 
-void displayRecipesList(struct Recipe* i)
+void displayRecipesList(struct Recipe* r)
 {
     /**
      * NOTICE HERE, THIS IS A MODEL TO ITERATE OVER A LINKED LIST
      */
-    while (i) {
-        fprintf(stdout, "Name : {%s}\n", i->name);
-        fprintf(stdout, "  Description : {%s}\n", i->description);
-        i = i->next;
+    while (r) {
+        fprintf(stdout, "Name : {%s}\n", r->name);
+        fprintf(stdout, "  Description : {%s}\n", r->description);
+        r = r->next;
     }
 }
 
 
-void _subAdd_private(struct Recipe* base, struct Recipe* rec)
+void _subAdd_private_r(struct Recipe* base, struct Recipe* rec)
 {
     if (base->next) {
-        _subAdd_private(base->next, rec);
+        _subAdd_private_r(base->next, rec);
         return;
     }
     base->next = rec;
@@ -76,7 +76,7 @@ void _subAdd_private(struct Recipe* base, struct Recipe* rec)
 struct Recipe* addRecipeToList(struct Recipe* base, struct Recipe* rec)
 {
     if (!base) return rec;
-    _subAdd_private(base, rec);
+    _subAdd_private_r(base, rec);
     return base;
 }
 
