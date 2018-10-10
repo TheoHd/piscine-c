@@ -60,6 +60,8 @@ add_library(
         DatabaseLibrary
         source/dataBase.c
         source/dataBase.h
+        source/access/ingredient.c
+        source/access/ingredient.h
 )
 
 
