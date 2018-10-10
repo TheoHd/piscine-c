@@ -10,6 +10,7 @@
  */
 struct Ingredient
 {
+    int id;
     char* name;
     char* description;
     double price;

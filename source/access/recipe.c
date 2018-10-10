@@ -9,7 +9,7 @@
 #define __RECIPE_STRING_MAX 2048
 
 
-struct Recipe* newRecipe(char* name, char* description)
+struct Recipe* newRecipe(int id, char* name, char* description)
 {
     /** allocation */
     struct Recipe* i = malloc(sizeof(struct Recipe));
@@ -21,6 +21,7 @@ struct Recipe* newRecipe(char* name, char* description)
     /** assigning */
     strcpy(i->name, name);
     strcpy(i->description, description);
+    i->id = id;
     i->next = NULL;
     return i;
 }
@@ -49,8 +50,10 @@ void displayRecipesList(struct Recipe* r)
     /**
      * NOTICE HERE, THIS IS A MODEL TO ITERATE OVER A LINKED LIST
      */
+    fprintf(stdout, "List of recipes :\n");
     while (r) {
-        fprintf(stdout, "Name : {%s}\n", r->name);
+        fprintf(stdout, " Name : {%s}\n", r->name);
+        fprintf(stdout, "  Id : {%d}\n", r->id);
         fprintf(stdout, "  Description : {%s}\n", r->description);
         r = r->next;
     }
@@ -82,7 +85,7 @@ struct Recipe* addRecipeToList(struct Recipe* base, struct Recipe* rec)
 
 MYSQL_RES* queryRecipes(MYSQL* connection)
 {
-    const char* query = "SELECT name, description FROM recipes;";
+    const char* query = "SELECT id, name, description FROM recipes;";
     if (mysql_query(connection, query)) {
         fprintf(stderr, "Query failed: %s\n", mysql_error(connection));
         return NULL;
@@ -102,7 +105,7 @@ struct Recipe* getAllRecipes(MYSQL* connection)
     struct Recipe* recipe = NULL;
     MYSQL_ROW row = NULL;
     while (NULL != (row = mysql_fetch_row(res))) {
-        recipe = addRecipeToList(recipe, newRecipe(row[0], row[1]));
+        recipe = addRecipeToList(recipe, newRecipe(atoi(row[0]), row[1], row[2]));
     }
 
     mysql_free_result(res);

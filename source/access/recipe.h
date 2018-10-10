@@ -10,6 +10,7 @@
  */
 struct Recipe
 {
+    int id;
     char* name;
     char* description;
     struct Recipe* next;

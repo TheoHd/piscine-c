@@ -10,7 +10,7 @@
 #define __INGREDIENT_STRING_MAX 2048
 
 
-struct Ingredient* newIngredient(char* name, char* description, double price)
+struct Ingredient* newIngredient(int id, char* name, char* description, double price)
 {
     /** allocation */
     struct Ingredient* i = malloc(sizeof(struct Ingredient));
@@ -24,6 +24,7 @@ struct Ingredient* newIngredient(char* name, char* description, double price)
     strcpy(i->description, description);
     i->price = price;
     i->next = NULL;
+    i->id = id;
     return i;
 }
 
@@ -52,8 +53,10 @@ void displayIngredientsList(struct Ingredient* i)
     /**
      * NOTICE HERE, THIS IS A MODEL TO ITERATE OVER A LINKED LIST
      */
+    fprintf(stdout, "List of ingredients :\n");
     while (i) {
-        fprintf(stdout, "Name : {%s}\n", i->name);
+        fprintf(stdout, " Name : {%s}\n", i->name);
+        fprintf(stdout, "  Id : {%d}\n", i->id);
         fprintf(stdout, "  Description : {%s}\n", i->description);
         fprintf(stdout, "  Price : {%0.2lf}€\n", i->price);
         i = i->next;
@@ -86,7 +89,7 @@ struct Ingredient* addIngredientToList(struct Ingredient* base, struct Ingredien
 
 MYSQL_RES* queryIngredients(MYSQL* connection)
 {
-    const char* query = "SELECT name, description, price FROM ingredients;";
+    const char* query = "SELECT id, name, description, price FROM ingredients;";
     if (mysql_query(connection, query)) {
         fprintf(stderr, "Query failed: %s\n", mysql_error(connection));
         return NULL;
@@ -106,8 +109,8 @@ struct Ingredient* getAllIngredients(MYSQL* connection)
     struct Ingredient* ingredient = NULL;
     MYSQL_ROW row = NULL;
     while (NULL != (row = mysql_fetch_row(res))) {
-        double price = strtod(row[2], NULL); // strtod => "string to double"
-        ingredient = addIngredientToList(ingredient, newIngredient(row[0], row[1], price));
+        double price = strtod(row[3], NULL); // strtod => "string to double"
+        ingredient = addIngredientToList(ingredient, newIngredient(atoi(row[0]), row[1], row[2], price));
     }
 
     mysql_free_result(res);
