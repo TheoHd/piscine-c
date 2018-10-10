@@ -35,7 +35,7 @@ void freeRecipe(struct Recipe* toDestroy)
 }
 
 
-void freeRecipeList(struct Recipes* i)
+void freeRecipeList(struct Recipe* i)
 {
     struct Recipes* tmp;
     while (i) {
