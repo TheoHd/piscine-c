@@ -9,7 +9,7 @@
 #define __RECIPE_STRING_MAX 2048
 
 
-struct Recipe* newIngredient(char* name, char* description)
+struct Recipe* newRecipe(char* name, char* description)
 {
     /** allocation */
     struct Recipe* i = malloc(sizeof(struct Recipe));
@@ -103,7 +103,7 @@ struct Recipe* getAllRecipes(MYSQL* connection)
     struct Recipe* recipe = NULL;
     MYSQL_ROW row = NULL;
     while (NULL != (row = mysql_fetch_row(res))) {
-        recipe = addRecipeToList(recipe, newIngredient(row[0], row[1]));
+        recipe = addRecipeToList(recipe, newRecipe(row[0], row[1]));
     }
 
     mysql_free_result(res);
