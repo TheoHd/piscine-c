@@ -58,8 +58,8 @@ mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARY)
 # Library database
 add_library(
         DatabaseLibrary
-        source/dataBase.c
-        source/dataBase.h
+        source/database.c
+        source/database.h
         source/access/ingredient.c
         source/access/ingredient.h
 )

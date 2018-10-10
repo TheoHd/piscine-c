@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "dataBase.h"
+#include "database.h"
 #include "access/ingredient.h"
 
 
