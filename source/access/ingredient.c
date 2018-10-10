@@ -48,6 +48,9 @@ void freeIngredientList(struct Ingredient* i)
 
 void displayIngredientsList(struct Ingredient* i)
 {
+    /**
+     * NOTICE HERE, THIS IS A MODEL TO ITERATE OVER A LINKED LIST
+     */
     while (i) {
         fprintf(stdout, "Name : {%s}\n", i->name);
         fprintf(stdout, "  Description : {%s}\n", i->description);
