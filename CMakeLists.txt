@@ -55,7 +55,14 @@ set(MYSQL_LIBRARIES ${MYSQL_LIBRARY})
 
 mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARY)
 
+# Library database
+add_library(
+        DatabaseLibrary
+        source/dataBase.c
+        source/dataBase.h
+)
+
 
 # Main
-add_executable(piscine_c source/main.c source/dataBase.c)
-target_link_libraries(piscine_c ${MYSQL_LIBRARY})
+add_executable(piscine_c source/main.c)
+target_link_libraries(piscine_c ${MYSQL_LIBRARY} DatabaseLibrary)
