@@ -1,15 +1,21 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "dataBase.h"
+#include "configuration.h"
+#include "../include/mysql.h"
 
 
-MYSQL* connectDataBase(){
-
+MYSQL* connectToDatabase()
+{
     MYSQL* mysql = NULL;
     mysql = mysql_init(mysql);
 
     if (!mysql) {
-        puts("Init faild, out of memory?");
-        return EXIT_FAILURE;
+        fprintf(stderr, "Init failed, out of memory?");
+        return NULL;
     }
+
     if (!mysql_real_connect(
         mysql,       /* MYSQL structure to use */
         MYSQL_HOST,  /* server hostname or IP address */
@@ -21,9 +27,8 @@ MYSQL* connectDataBase(){
         CLIENT_FOUND_ROWS /* connection flags */ )) {
         fprintf(stderr, "%s\n", mysql_error(mysql));
         puts("Connect failed\n");
-        return NULL ;
-    } else {
-        puts("Connect OK\n");
-        return mysql ;
+        return NULL;
     }
+    puts("Connect OK\n");
+    return mysql;
 }

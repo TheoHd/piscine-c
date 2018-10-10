@@ -7,12 +7,8 @@
 
 int main(int argc, char** argv)
 {
-    MYSQL* dataBase =  connectDataBase() ;
-
-
-
+    MYSQL* dataBase = connectToDatabase() ;
     mysql_close(dataBase);
-
     return EXIT_SUCCESS;
 }
 
