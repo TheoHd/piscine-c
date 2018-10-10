@@ -26,9 +26,8 @@ MYSQL* connectToDatabase()
         NULL,        /* socket file or named pipe name */
         CLIENT_FOUND_ROWS /* connection flags */ )) {
         fprintf(stderr, "%s\n", mysql_error(mysql));
-        puts("Connect failed\n");
+        fprintf(stderr, "Connect failed\n");
         return NULL;
     }
-    puts("Connect OK\n");
     return mysql;
 }
