@@ -21,7 +21,9 @@ struct Ingredient
  * @param MYSQL con
  * @return
  */
-struct Ingredient* getAllIngredients(MYSQL connection);
+struct Ingredient* getAllIngredients(MYSQL* connection);
+
+void freeIngredientList(struct Ingredient* i);
 
 void displayIngredientsList(struct Ingredient* i);
 
