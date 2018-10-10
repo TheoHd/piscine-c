@@ -57,5 +57,5 @@ mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARY)
 
 
 # Main
-add_executable(piscine_c source/main.c)
+add_executable(piscine_c source/main.c source/dataBase.c)
 target_link_libraries(piscine_c ${MYSQL_LIBRARY})
