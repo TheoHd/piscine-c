@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <memory.h>
 #include <stdio.h>
@@ -37,7 +36,7 @@ void freeRecipe(struct Recipe* toDestroy)
 
 void freeRecipeList(struct Recipe* i)
 {
-    struct Recipes* tmp;
+    struct Recipe* tmp;
     while (i) {
         tmp = i;
         i = i->next;
@@ -59,13 +58,13 @@ void displayRecipesList(struct Recipe* i)
 }
 
 
-void _subAdd_private(struct Recipe* base, struct Recipe* ing)
+void _subAdd_private(struct Recipe* base, struct Recipe* rec)
 {
     if (base->next) {
-        _subAdd_private(base->next, ing);
+        _subAdd_private(base->next, rec);
         return;
     }
-    base->next = ing;
+    base->next = rec;
 }
 
 /**
