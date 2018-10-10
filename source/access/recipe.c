@@ -104,7 +104,6 @@ struct Recipe* getAllRecipes(MYSQL* connection)
     struct Recipe* recipe = NULL;
     MYSQL_ROW row = NULL;
     while (NULL != (row = mysql_fetch_row(res))) {
-        double price = strtod(row[2], NULL); // strtod => "string to double"
         recipe = addRecipeToList(recipe, newIngredient(row[0], row[1]));
     }
 
