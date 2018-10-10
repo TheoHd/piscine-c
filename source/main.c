@@ -18,6 +18,14 @@ void help()
 }
 
 
+bool argIs(char* given_arg, char* long_arg, char* short_arg)
+{
+    if (0 == strcmp(given_arg, long_arg)) return true;
+    if (0 == strcmp(given_arg, short_arg)) return true;
+    return false;
+}
+
+
 void getIngredientsBelowPrice(MYSQL* connection, long price)
 {
     struct Ingredient* i = getAllIngredients(connection);
@@ -58,10 +66,10 @@ int main(int argc, char** argv)
     MYSQL* connection = connectToDatabase();
 
     if (argc > 2) {
-        if (0 == strcmp(argv[1], "price")) {
+        if (argIs(argv[1], "price", "p")) {
             getIngredientsBelowPrice(connection, strtol(argv[2], NULL, 10));
         }
-        if (0 == strcmp(argv[1], "name")) {
+        if (argIs(argv[1], "name", "n")) {
             getIngredientsName(connection, argv[2]);
         }
 
