@@ -14,7 +14,10 @@ int main(int argc, char** argv)
     displayIngredientsList(i);
     /** example of filter on the list */
     while (i) {
-        if (i->price != 0) continue; // if price isn't 0, don't print it
+        if (i->price != 0) {
+            i = i->next;
+            continue; // if price isn't 0, don't print it
+        }
         fprintf(stdout, "%s\n", i->name);
         i = i->next;
     }
@@ -24,9 +27,3 @@ int main(int argc, char** argv)
     mysql_close(dataBase);
     return EXIT_SUCCESS;
 }
-
-
-
-
-
-

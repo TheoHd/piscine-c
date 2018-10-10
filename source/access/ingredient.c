@@ -78,17 +78,34 @@ struct Ingredient* addIngredientToList(struct Ingredient* base, struct Ingredien
 }
 
 
+MYSQL_RES* getIngredients(MYSQL* connection)
+{
+    const char* query = "SELECT name, description, price FROM ingredients;";
+    if (mysql_query(connection, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(connection));
+        return NULL;
+    }
+    return mysql_store_result(connection);
+}
+
+
 struct Ingredient* getAllIngredients(MYSQL* connection)
 {
-    char* query = "SELECT name, description, price FROM ingredients;";
-    struct Ingredient* ingredient = NULL;
-
     /**
      * TODO: Do the database querying here, get back the data
      *       store it there, return linked list
      */
-    for (int i = 0; i < 5; i += 1) {
-        ingredient = addIngredientToList(ingredient, newIngredient("name", "description", 0));
+    MYSQL_RES* res = getIngredients(connection);
+    if (!res) {
+        fprintf(stderr, "Couldn't get results set: %s\n", mysql_error(connection));
+        return NULL;
+    }
+
+    struct Ingredient* ingredient = NULL;
+    MYSQL_ROW row = NULL;
+    while (NULL != (row = mysql_fetch_row(res))) {
+        double price = strtod(row[2], NULL);
+        ingredient = addIngredientToList(ingredient, newIngredient(row[0], row[1], price));
     }
 
     return ingredient;
