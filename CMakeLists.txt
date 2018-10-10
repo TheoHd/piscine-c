@@ -66,3 +66,8 @@ add_library(
 # Main
 add_executable(piscine_c source/main.c)
 target_link_libraries(piscine_c ${MYSQL_LIBRARY} DatabaseLibrary)
+
+
+# Tests
+add_executable(tests_db_access tests/test_db_access.c)
+target_link_libraries(tests_db_access ${MYSQL_LIBRARY} DatabaseLibrary)

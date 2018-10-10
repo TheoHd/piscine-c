@@ -34,7 +34,7 @@ void freeRecipe(struct Recipe* toDestroy)
 }
 
 
-void freeRecipeList(struct Recipe* i)
+void freeRecipesList(struct Recipe* i)
 {
     struct Recipe* tmp;
     while (i) {
@@ -58,10 +58,10 @@ void displayRecipesList(struct Recipe* i)
 }
 
 
-void _subAdd_private(struct Recipe* base, struct Recipe* rec)
+void _subAddRecipe_private(struct Recipe* base, struct Recipe* rec)
 {
     if (base->next) {
-        _subAdd_private(base->next, rec);
+        _subAddRecipe_private(base->next, rec);
         return;
     }
     base->next = rec;
@@ -76,7 +76,7 @@ void _subAdd_private(struct Recipe* base, struct Recipe* rec)
 struct Recipe* addRecipeToList(struct Recipe* base, struct Recipe* rec)
 {
     if (!base) return rec;
-    _subAdd_private(base, rec);
+    _subAddRecipe_private(base, rec);
     return base;
 }
 
