@@ -1,38 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <memory.h>
 
 #include "database.h"
 #include "access/ingredient.h"
 #include "access/recipe.h"
 
 
-int main(int argc, char** argv)
+void help()
 {
-    MYSQL* connection = connectToDatabase();
+    printf(
+        "Options :\n"
+        "  price <value> return ingredients below that price\n"
+        "  name <name> return info about one ingredient\n"
+    );
+}
 
+
+void getIngredientsBelowPrice(MYSQL* connection, long price)
+{
     struct Ingredient* i = getAllIngredients(connection);
-    displayIngredientsList(i);
-    /** example of filter on the list */
     while (i) {
-        if (i->price != 0) {
+        if (i->price > price) {
             i = i->next;
-            continue; // if price isn't 0, don't print it
+            continue;
         }
-        fprintf(stdout, "%s\n", i->name);
+        fprintf(stdout, "%s - {%.2lf€}\n", i->name, i->price);
         i = i->next;
     }
     freeIngredientList(i);
+}
 
-    struct Recipe* r = getAllRecipes(connection);
-    displayRecipesList(r);
-    /** example of filter on the list */
-    while (r) {
-        fprintf(stdout, "%s\n", r->name);
-        r = r->next;
+
+void getIngredientsName(MYSQL* connection, char* name)
+{
+    struct Ingredient* i = getAllIngredients(connection);
+    while (i) {
+        if (0 != strcmp(i->name, name)) {
+            i = i->next;
+            continue;
+        }
+        fprintf(stdout, "%s - %s - {%.2lf€}\n", i->name, i->description, i->price);
+        break;
     }
-    freeRecipesList(r);
+    freeIngredientList(i);
+}
 
+
+int main(int argc, char** argv)
+{
+    if (argc > 1 && 0 == strcmp(argv[1], "help")) {
+        help();
+        return EXIT_SUCCESS;
+    }
+
+    MYSQL* connection = connectToDatabase();
+
+    if (argc > 2) {
+        if (0 == strcmp(argv[1], "price")) {
+            getIngredientsBelowPrice(connection, strtol(argv[2], NULL, 10));
+        }
+        if (0 == strcmp(argv[1], "name")) {
+            getIngredientsName(connection, argv[2]);
+        }
+
+    }
 
     mysql_close(connection);
     return EXIT_SUCCESS;
