@@ -6,15 +6,11 @@ set(CMAKE_C_STANDARD 99)
 if (WIN32)
     find_path(MYSQL_INCLUDE_DIR
             NAMES "mysql.h"
-            PATHS "$ENV{PROGRAMFILES}/MySQL/*/include"
-            "$ENV{PROGRAMFILES(x86)}/MySQL/*/include"
-            "$ENV{SYSTEMDRIVE}/MySQL/*/include")
+            PATHS "include")
 
     find_library(MYSQL_LIBRARY
-            NAMES "mysqlclient" "mysqlclient_r"
-            PATHS "$ENV{PROGRAMFILES}/MySQL/*/lib"
-            "$ENV{PROGRAMFILES(x86)}/MySQL/*/lib"
-            "$ENV{SYSTEMDRIVE}/MySQL/*/lib")
+            NAMES "libmysql.dll"
+            PATHS "lib")
 else ()
     find_path(MYSQL_INCLUDE_DIR
             NAMES "mysql.h"
