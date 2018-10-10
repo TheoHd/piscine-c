@@ -58,6 +58,8 @@ add_library(
         source/database.h
         source/access/ingredient.c
         source/access/ingredient.h
+        source/access/recipe.c
+        source/access/recipe.h
 )
 
 
