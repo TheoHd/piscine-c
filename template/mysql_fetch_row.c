@@ -22,16 +22,13 @@
  */
 
 #include "config.h"
-
 #include <stdlib.h>
 #include <stdio.h>
-
 #include <mysql.h>
 
 int main(int argc, char **argv)
 {
     MYSQL *mysql = NULL;
-
     mysql = mysql_init(mysql);
 
     if (!mysql) {
@@ -74,6 +71,5 @@ int main(int argc, char **argv)
     }
 
     mysql_close(mysql);
-
     return EXIT_SUCCESS;
 }
