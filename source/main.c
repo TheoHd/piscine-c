@@ -8,9 +8,9 @@
 
 int main(int argc, char** argv)
 {
-    MYSQL* dataBase = connectToDatabase();
+    MYSQL* connection = connectToDatabase();
 
-    struct Ingredient* i = getAllIngredients(dataBase);
+    struct Ingredient* i = getAllIngredients(connection);
     displayIngredientsList(i);
     /** example of filter on the list */
     while (i) {
@@ -23,7 +23,6 @@ int main(int argc, char** argv)
     }
     freeIngredientList(i);
 
-
-    mysql_close(dataBase);
+    mysql_close(connection);
     return EXIT_SUCCESS;
 }

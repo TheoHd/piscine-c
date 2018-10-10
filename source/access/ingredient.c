@@ -91,10 +91,6 @@ MYSQL_RES* getIngredients(MYSQL* connection)
 
 struct Ingredient* getAllIngredients(MYSQL* connection)
 {
-    /**
-     * TODO: Do the database querying here, get back the data
-     *       store it there, return linked list
-     */
     MYSQL_RES* res = getIngredients(connection);
     if (!res) {
         fprintf(stderr, "Couldn't get results set: %s\n", mysql_error(connection));
