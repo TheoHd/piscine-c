@@ -80,7 +80,7 @@ struct Ingredient* addIngredientToList(struct Ingredient* base, struct Ingredien
 
 struct Ingredient* getAllIngredients(MYSQL* connection)
 {
-    char* query = "WRITE SQL QUERY HERE";
+    char* query = "SELECT name, description, price FROM ingredients;";
     struct Ingredient* ingredient = NULL;
 
     /**
