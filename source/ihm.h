@@ -15,5 +15,6 @@ void getRecipeByName(MYSQL* connection, char* name);
 void getRecipesFromAvailableQuantity(MYSQL* connection);
 void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q);
 void findRecipesFromAvailableQuantity(MYSQL* connection, struct Ingredient* i);
+void findRecipesById(MYSQL* connection, int id) ;
 
 #endif //PISCINE_IHM_H

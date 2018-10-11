@@ -88,17 +88,18 @@ void getRecipeByName(MYSQL* connection, char* name)
     freeRecipesList(r);
 }
 
-void getRecipe
 
 
 void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
 {
     struct Quantity* q = getAllQuantities(connection);
     while (q) {
+
         if (q->recipe != r->id) {
             q = q->next;
             continue;
         }
+
         findIngredientsFromQuantity(connection, q);
         q = q->next;
     }
@@ -121,9 +122,24 @@ void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q)
 void findRecipesFromQuantity(MYSQL* connection, struct Ingredient* i){
     struct Quantity* q = getAllQuantities(connection);
     while(i){
-        printf("%s %s", q->ingredient, i->name);
+        fprintf(stdout,"%s %s", q->ingredient, i->name);
         if(q->ingredient){
 
         }
     }
+}
+
+void findRecipesById(MYSQL* connection, int id){
+    struct Recipe* r = getAllRecipes(connection);
+    while (r) {
+        if (NULL == strstr(r->id, id)) {
+            r = r->next;
+            continue;
+        }
+        fprintf(stdout, "Recipe :\n");
+        fprintf(stdout, " %S, %s\n", r->name, r->description);
+        findQuantityFromRecipe(connection, r);
+        break;
+    }
+    freeRecipesList(r);
 }
