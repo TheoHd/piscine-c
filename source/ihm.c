@@ -47,7 +47,7 @@ void getIngredientsName(MYSQL* connection, char* name)
 {
     struct Ingredient* i = getAllIngredients(connection);
     while (i) {
-        if (0 != strcmp(i->name, name)) {
+        if (NULL == strstr(i->name, name)) {
             i = i->next;
             continue;
         }
