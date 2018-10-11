@@ -88,6 +88,24 @@ void getRecipeByName(MYSQL* connection, char* name)
     freeRecipesList(r);
 }
 
+<<<<<<< HEAD
+=======
+void getRecipesFromAvailableQuantity(MYSQL* connection){
+    struct Recipe* r  = getAllRecipes(connection);
+    struct Quantity* q  = getAllQuantities(connection);
+    while(r){
+        if(q->recipe == r->id && q->amount == 0){
+            q = q->next;
+            continue;
+        }
+        fprintf(stdout, "Recipe available :\n");
+        fprintf(stdout, " %s, %s\n", r->name, r->description);
+        r = r->next;
+    }
+    freeRecipesList(r);
+    freeQuantitiesList(q);
+}
+>>>>>>> e1ac69c1c440954aa0ab954b8f630fbf6b086517
 
 
 void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
@@ -118,6 +136,7 @@ void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q)
     }
     freeIngredientList(i);
 }
+<<<<<<< HEAD
 
 void findRecipesFromQuantity(MYSQL* connection, struct Ingredient* i){
     struct Quantity* q = getAllQuantities(connection);
@@ -143,3 +162,5 @@ void findRecipesById(MYSQL* connection, int id){
     }
     freeRecipesList(r);
 }
+=======
+>>>>>>> e1ac69c1c440954aa0ab954b8f630fbf6b086517
