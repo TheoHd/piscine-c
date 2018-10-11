@@ -134,7 +134,7 @@ void getRecipesById(MYSQL *connection, long id) {
             continue;
         }
         fprintf(stdout, "Recipe :\n");
-        fprintf(stdout, " %S, %s\n", r->name, r->description);
+        fprintf(stdout, " %s, %s\n", r->name, r->description);
         break;
     }
     freeRecipesList(r);
