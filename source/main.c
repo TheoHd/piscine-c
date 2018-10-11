@@ -31,7 +31,7 @@ int main(int argc, char** argv)
             getRecipeByName(connection, argv[2]);
         }
         if (argIs(argv[1], "leftover", "lo")) {
-
+            getRecipesFromAvailableQuantity(connection);
         }
     }
 
