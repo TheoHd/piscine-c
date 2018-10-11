@@ -3,6 +3,7 @@
 
 #include "../include/mysql.h"
 #include <stdbool.h>
+#include "access/quantity.h"
 
 
 void help();
@@ -11,5 +12,6 @@ void getIngredientsBelowPrice(MYSQL* connection, long price);
 void getIngredientsName(MYSQL* connection, char* name);
 void listRecipes(MYSQL* connection);
 void getRecipeByName(MYSQL* connection, char* name);
+void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q);
 
 #endif //PISCINE_IHM_H

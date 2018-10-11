@@ -3,7 +3,11 @@
 
 #include "access/ingredient.h"
 #include "access/recipe.h"
+#include "access/quantity.h"
 #include "ihm.h"
+
+
+void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r);
 
 
 void help()
@@ -14,6 +18,7 @@ void help()
         "  list-recipe list all available recipes\n"
         "  price <value> return ingredients below that price\n"
         "  name <name> return info about one ingredient\n"
+        "  recipe <name> return info about recipes matching that name\n"
         "\n"
         "NB : most commands have a short version composed of their initials\n"
     );
@@ -65,16 +70,47 @@ void listRecipes(MYSQL* connection)
     freeRecipesList(i);
 }
 
+
 void getRecipeByName(MYSQL* connection, char* name)
 {
-    struct Recipe* i = getAllRecipes(connection);
-    while (i) {
-        if (NULL == strstr(i->name, name)) {
-            i = i->next;
+    struct Recipe* r = getAllRecipes(connection);
+    while (r) {
+        if (NULL == strstr(r->name, name)) {
+            r = r->next;
             continue;
         }
-        fprintf(stdout, "%s - %s\n", i->name, i->description);
+        fprintf(stdout, "Recipe :\n");
+        fprintf(stdout, " %s, %s\n", r->name, r->description);
+        findQuantityFromRecipe(connection, r);
         break;
     }
-    freeRecipesList(i);
+    freeRecipesList(r);
+}
+
+
+void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
+{
+    struct Quantity* q = getAllQuantities(connection);
+    while (q) {
+        if (q->recipe != r->id) {
+            q = q->next;
+            continue;
+        }
+        findIngredientsFromQuantity(connection, q);
+        q = q->next;
+    }
+    freeQuantitiesList(q);
+}
+
+
+void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q)
+{
+    struct Ingredient* i = getAllIngredients(connection);
+    while (i) {
+        if (q->ingredient == i->id) {
+            fprintf(stdout, " gs %s, %s - {%0.2lf€}\n", i->name, i->description, i->price);
+        }
+        i = i->next;
+    }
+    freeIngredientList(i);
 }
