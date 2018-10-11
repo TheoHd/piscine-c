@@ -18,6 +18,9 @@ int main(int argc, char** argv)
         if (argIs(argv[1], "list-recipes", "lr")) {
             listRecipes(connection);
         }
+        if (argIs(argv[1], "leftover", "lo")) {
+            getRecipesFromAvailableQuantity(connection);
+        }
     }
 
     if (argc > 2) {
@@ -29,9 +32,6 @@ int main(int argc, char** argv)
         }
         if (argIs(argv[1], "recipe", "r")) {
             getRecipeByName(connection, argv[2]);
-        }
-        if (argIs(argv[1], "leftover", "lo")) {
-            getRecipesFromAvailableQuantity(connection);
         }
     }
 

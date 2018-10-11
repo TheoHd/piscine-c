@@ -89,11 +89,10 @@ void getRecipeByName(MYSQL* connection, char* name)
 }
 
 void getRecipesFromAvailableQuantity(MYSQL* connection){
-    fprintf(stdout,"Test");
     struct Recipe* r  = getAllRecipes(connection);
     struct Quantity* q  = getAllQuantities(connection);
     while(r){
-        if(q->recipe == r->id && q->amount < 0){
+        if(q->recipe == r->id && q->amount == 0){
             q = q->next;
             continue;
         }
