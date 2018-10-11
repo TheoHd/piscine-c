@@ -27,6 +27,9 @@ int main(int argc, char** argv)
         if (argIs(argv[1], "name", "n")) {
             getIngredientsName(connection, argv[2]);
         }
+        if (argIs(argv[1], "recipe", "r")) {
+            getRecipeByName(connection, argv[2]);
+        }
     }
 
     mysql_close(connection);

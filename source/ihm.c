@@ -64,3 +64,17 @@ void listRecipes(MYSQL* connection)
     displayRecipesList(i);
     freeRecipesList(i);
 }
+
+void getRecipeByName(MYSQL* connection, char* name)
+{
+    struct Recipe* i = getAllRecipes(connection);
+    while (i) {
+        if (NULL == strstr(i->name, name)) {
+            i = i->next;
+            continue;
+        }
+        fprintf(stdout, "%s - %s\n", i->name, i->description);
+        break;
+    }
+    freeRecipesList(i);
+}
