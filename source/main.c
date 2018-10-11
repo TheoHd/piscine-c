@@ -12,8 +12,12 @@ void help()
 {
     printf(
         "Options :\n"
+        "  help show this help\n"
+        "  list-recipe list all available recipes\n"
         "  price <value> return ingredients below that price\n"
         "  name <name> return info about one ingredient\n"
+        "\n"
+        "NB : most commands have a short version composed of their initials\n"
     );
 }
 
@@ -56,6 +60,14 @@ void getIngredientsName(MYSQL* connection, char* name)
 }
 
 
+void listRecipes(MYSQL* connection)
+{
+    struct Recipe* i = getAllRecipes(connection);
+    displayRecipesList(i);
+    freeRecipesList(i);
+}
+
+
 int main(int argc, char** argv)
 {
     if (argc > 1 && 0 == strcmp(argv[1], "help")) {
@@ -65,6 +77,12 @@ int main(int argc, char** argv)
 
     MYSQL* connection = connectToDatabase();
 
+    if (argc > 1) {
+        if (argIs(argv[1], "list-recipes", "lr")) {
+            listRecipes(connection);
+        }
+    }
+
     if (argc > 2) {
         if (argIs(argv[1], "price", "p")) {
             getIngredientsBelowPrice(connection, strtol(argv[2], NULL, 10));
@@ -72,7 +90,6 @@ int main(int argc, char** argv)
         if (argIs(argv[1], "name", "n")) {
             getIngredientsName(connection, argv[2]);
         }
-
     }
 
     mysql_close(connection);
