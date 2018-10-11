@@ -36,6 +36,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="source/access/ingredient.c" />
+		<Unit filename="source/access/ingredient.h" />
+		<Unit filename="source/access/quantity.c" />
+		<Unit filename="source/access/quantity.h" />
+		<Unit filename="source/access/recipe.c" />
+		<Unit filename="source/access/recipe.h" />
+		<Unit filename="source/ihm.h" />
+		<Unit filename="source/ihm.c" />
+		<Unit filename="source/database.h" />
+		<Unit filename="source/database.c" />
 		<Unit filename="source/configuration.h" />
 		<Unit filename="source/main.c">
 			<Option compilerVar="CC" />
