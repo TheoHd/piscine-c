@@ -5,14 +5,13 @@
 #include "ihm.h"
 
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
     if (argc > 1 && argIs(argv[1], "help", "h")) {
         help();
         return EXIT_SUCCESS;
     }
 
-    MYSQL* connection = connectToDatabase();
+    MYSQL *connection = connectToDatabase();
 
     if (argc > 1) {
         if (argIs(argv[1], "list-recipes", "lr")) {

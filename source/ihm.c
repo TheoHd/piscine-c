@@ -7,11 +7,10 @@
 #include "ihm.h"
 
 
-void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r);
+void findQuantityFromRecipe(MYSQL *connection, struct Recipe *r);
 
 
-void help()
-{
+void help() {
     printf(
             "Options :\n"
             "  help show this help\n"
@@ -26,17 +25,15 @@ void help()
 }
 
 
-bool argIs(char* given_arg, char* long_arg, char* short_arg)
-{
+bool argIs(char *given_arg, char *long_arg, char *short_arg) {
     if (0 == strcmp(given_arg, long_arg)) return true;
     if (0 == strcmp(given_arg, short_arg)) return true;
     return false;
 }
 
 
-void getIngredientsBelowPrice(MYSQL* connection, long price)
-{
-    struct Ingredient* i = getAllIngredients(connection);
+void getIngredientsBelowPrice(MYSQL *connection, long price) {
+    struct Ingredient *i = getAllIngredients(connection);
     while (i) {
         if (i->price > price) {
             i = i->next;
@@ -49,9 +46,8 @@ void getIngredientsBelowPrice(MYSQL* connection, long price)
 }
 
 
-void getIngredientsName(MYSQL* connection, char* name)
-{
-    struct Ingredient* i = getAllIngredients(connection);
+void getIngredientsName(MYSQL *connection, char *name) {
+    struct Ingredient *i = getAllIngredients(connection);
     while (i) {
         if (NULL == strstr(i->name, name)) {
             i = i->next;
@@ -64,17 +60,15 @@ void getIngredientsName(MYSQL* connection, char* name)
 }
 
 
-void listRecipes(MYSQL* connection)
-{
-    struct Recipe* i = getAllRecipes(connection);
+void listRecipes(MYSQL *connection) {
+    struct Recipe *i = getAllRecipes(connection);
     displayRecipesList(i);
     freeRecipesList(i);
 }
 
 
-void getRecipeByName(MYSQL* connection, char* name)
-{
-    struct Recipe* r = getAllRecipes(connection);
+void getRecipeByName(MYSQL *connection, char *name) {
+    struct Recipe *r = getAllRecipes(connection);
     while (r) {
         if (NULL == strstr(r->name, name)) {
             r = r->next;
@@ -88,11 +82,11 @@ void getRecipeByName(MYSQL* connection, char* name)
     freeRecipesList(r);
 }
 
-void getRecipesFromAvailableQuantity(MYSQL* connection){
-    struct Recipe* r  = getAllRecipes(connection);
-    struct Quantity* q  = getAllQuantities(connection);
-    while(r){
-        if(q->recipe == r->id && q->amount == 0){
+void getRecipesFromAvailableQuantity(MYSQL *connection) {
+    struct Recipe *r = getAllRecipes(connection);
+    struct Quantity *q = getAllQuantities(connection);
+    while (r) {
+        if (q->recipe == r->id && q->amount == 0) {
             q = q->next;
             continue;
         }
@@ -105,9 +99,8 @@ void getRecipesFromAvailableQuantity(MYSQL* connection){
 }
 
 
-void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
-{
-    struct Quantity* q = getAllQuantities(connection);
+void findQuantityFromRecipe(MYSQL *connection, struct Recipe *r) {
+    struct Quantity *q = getAllQuantities(connection);
     while (q) {
         if (q->recipe != r->id) {
             q = q->next;
@@ -120,9 +113,8 @@ void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
 }
 
 
-void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q)
-{
-    struct Ingredient* i = getAllIngredients(connection);
+void findIngredientsFromQuantity(MYSQL *connection, struct Quantity *q) {
+    struct Ingredient *i = getAllIngredients(connection);
     while (i) {
         if (q->ingredient == i->id) {
             fprintf(stdout, " gs %s, %s - {%0.2lf€}\n", i->name, i->description, i->price);
