@@ -13,14 +13,15 @@ void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r);
 void help()
 {
     printf(
-        "Options :\n"
-        "  help show this help\n"
-        "  list-recipe list all available recipes\n"
-        "  price <value> return ingredients below that price\n"
-        "  name <name> return info about one ingredient\n"
-        "  recipe <name> return info about recipes matching that name\n"
-        "\n"
-        "NB : most commands have a short version composed of their initials\n"
+            "Options :\n"
+            "  help show this help\n"
+            "  list-recipe list all available recipes\n"
+            "  price <value> return ingredients below that price\n"
+            "  name <name> return info about one ingredient\n"
+            "  recipe <name> return info about recipes matching that name\n"
+            "  leftover return recipes from available ingredients\n"
+            "\n"
+            "NB : most commands have a short version composed of their initials\n"
     );
 }
 
@@ -74,7 +75,6 @@ void listRecipes(MYSQL* connection)
 void getRecipeByName(MYSQL* connection, char* name)
 {
     struct Recipe* r = getAllRecipes(connection);
-    struct Recipe* base = r;
     while (r) {
         if (NULL == strstr(r->name, name)) {
             r = r->next;
@@ -85,14 +85,15 @@ void getRecipeByName(MYSQL* connection, char* name)
         findQuantityFromRecipe(connection, r);
         break;
     }
-    freeRecipesList(base);
+    freeRecipesList(r);
 }
+
+void getRecipe
 
 
 void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
 {
     struct Quantity* q = getAllQuantities(connection);
-    struct Quantity* base = q;
     while (q) {
         if (q->recipe != r->id) {
             q = q->next;
@@ -101,19 +102,28 @@ void findQuantityFromRecipe(MYSQL* connection, struct Recipe* r)
         findIngredientsFromQuantity(connection, q);
         q = q->next;
     }
-    freeQuantitiesList(base);
+    freeQuantitiesList(q);
 }
 
 
 void findIngredientsFromQuantity(MYSQL* connection, struct Quantity* q)
 {
     struct Ingredient* i = getAllIngredients(connection);
-    struct Ingredient* base = i;
     while (i) {
         if (q->ingredient == i->id) {
             fprintf(stdout, " gs %s, %s - {%0.2lf€}\n", i->name, i->description, i->price);
         }
         i = i->next;
     }
-    freeIngredientList(base);
+    freeIngredientList(i);
+}
+
+void findRecipesFromQuantity(MYSQL* connection, struct Ingredient* i){
+    struct Quantity* q = getAllQuantities(connection);
+    while(i){
+        printf("%s %s", q->ingredient, i->name);
+        if(q->ingredient){
+
+        }
+    }
 }
