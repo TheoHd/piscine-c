@@ -62,6 +62,8 @@ add_library(
         source/access/recipe.h
         source/access/quantity.c
         source/access/quantity.h
+        source/ihm.c
+        source/ihm.h
 )
 
 
